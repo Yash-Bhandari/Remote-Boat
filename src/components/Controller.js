@@ -25,9 +25,12 @@ const Controller = () => {
                 max={90}
             />
             <CardActions style={{justifyContent: 'center'}}>
-                <Button variant = 'contained' size='small' color='secondary' target='_blank'>
-                    Go Nibba!
-                        </Button>
+                <Button style={{marginRight: '2rem'}} variant='contained' size='med' color='primary'>
+                    Reset
+                </Button>
+                <Button style={{marginLeft: '2rem'}} variant = 'contained' size='med' color='secondary'>
+                    Send
+                </Button>
             </CardActions>
         </Card>
     )
