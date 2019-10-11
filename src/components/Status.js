@@ -1,20 +1,10 @@
-import React, { useState } from 'react';
-import Paper from '@material-ui/core/Paper';
+import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import CardContent from '@material-ui/core/CardContent';
+import { getStatus } from '../utils/liason';
 import { Typography } from '@material-ui/core';
 
-const Status = () => {
-    let [boatState, setBoatState] = useState({
-        position: [1, 2],
-        heading: 30,
-        wind_dir: 200,
-        rel_wind_dir: -170,
-        wind_speed: 5,
-        rudder: 0,
-        sail: 40
-    })
-
+const Status = ({boatState}) => {
     return (
         <Grid container spacing={24} style={{ padding: 24 }}>
             {Object.keys(boatState).map(

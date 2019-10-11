@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
+import { sendRudder, sendSail } from '../utils/liason';
 import SliderField from './SliderField';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions'
 import Button from '@material-ui/core/Button'
 
-const Controller = () => {
-    let [rudder, setRudder] = useState(0);
-    let [sail, setSail] = useState(0);
+const Controller = ( {boatState} ) => {
+    let [rudder, setRudder] = useState(boatState.rudder);
+    let [sail, setSail] = useState(boatState.sail);
+
+    const send = () => {
+        sendSail(sail);
+        sendRudder(rudder);
+    }
+
+    const reset = () => {
+        console.log('resetting');
+        setRudder(boatState.rudder);
+        setSail(boatState.sail);
+    }
 
     return (
         <Card style={{padding: '1rem'}}>
@@ -25,10 +37,10 @@ const Controller = () => {
                 max={90}
             />
             <CardActions style={{justifyContent: 'center'}}>
-                <Button style={{marginRight: '2rem'}} variant='contained' size='med' color='primary'>
+                <Button style={{marginRight: '2rem'}} variant='contained' size='med' color='primary' onClick={reset}>
                     Reset
                 </Button>
-                <Button style={{marginLeft: '2rem'}} variant = 'contained' size='med' color='secondary'>
+                <Button style={{marginLeft: '2rem'}} variant = 'contained' size='med' color='secondary' onClick={send}>
                     Send
                 </Button>
             </CardActions>
