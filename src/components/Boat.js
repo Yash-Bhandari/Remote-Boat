@@ -18,6 +18,8 @@ const Boat = () => {
         const statusUpdater = window.setInterval(() => {
             getStatus().then(newState => setBoatState(newState));
         }, 1000)
+
+        return () => window.clearInterval(statusUpdater);
     })
 
     return (

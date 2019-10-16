@@ -1,13 +1,20 @@
-const url = 'http://localhost:5000/';
+const url = 'http://192.168.43.236:5000/';
 
 const putReq = {
-    method: 'PUT'
+    method: 'PUT',
+    headers: {
+        'content-type': 'application/json'
+    }
 }
 
-const getStatus = () => fetch(url+'status').then(resp => resp.json())
+const getStatus = () => fetch(url + 'status').then(resp => resp.json())
 
-const sendRudder = (angle) => fetch(url+'rudder?angle='+angle, putReq)
+const sendControl = async (sail_angle, rudder_angle) => fetch(url + 'control',
+    {
+        ...putReq, body: JSON.stringify({
+            rudder_angle: rudder_angle,
+            sail_angle: sail_angle
+        })
+    })
 
-const sendSail = (angle) => fetch(url+'sail?angle='+angle, putReq)
-
-export { getStatus, sendRudder, sendSail }
+export { getStatus, sendControl }

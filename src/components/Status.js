@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import CardContent from '@material-ui/core/CardContent';
-import { getStatus } from '../utils/liason';
 import { Typography } from '@material-ui/core';
 
 const Status = ({boatState}) => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { sendRudder, sendSail } from '../utils/liason';
+import { sendControl } from '../utils/liason';
 import SliderField from './SliderField';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions'
@@ -10,8 +10,7 @@ const Controller = ( {boatState} ) => {
     let [sail, setSail] = useState(boatState.sail);
 
     const send = () => {
-        sendSail(sail);
-        sendRudder(rudder);
+        sendControl(sail, rudder);
     }
 
     const reset = () => {
