@@ -1,7 +1,6 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Slider from '@material-ui/core/Slider'
-import Button from '@material-ui/core/Button'
 import { Typography } from '@material-ui/core';
 
 const SliderField = ({ valueName, value, setValue, min, max }) => {

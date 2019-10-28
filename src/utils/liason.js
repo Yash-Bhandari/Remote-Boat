@@ -1,4 +1,4 @@
-const url = 'http://192.168.43.236:5000/';
+const url = 'http://192.168.0.22:5000/';
 
 const putReq = {
     method: 'PUT',
@@ -7,9 +7,9 @@ const putReq = {
     }
 }
 
-const getStatus = () => fetch(url + 'status').then(resp => resp.json())
+const getStatus = async () => fetch(url + 'status').then(resp => resp.json())
 
-const sendControl = async (sail_angle, rudder_angle) => fetch(url + 'control',
+const sendControl = async (sail_angle, rudder_angle) => await fetch(url + 'control',
     {
         ...putReq, body: JSON.stringify({
             rudder_angle: rudder_angle,
@@ -17,4 +17,11 @@ const sendControl = async (sail_angle, rudder_angle) => fetch(url + 'control',
         })
     })
 
-export { getStatus, sendControl }
+const sendHelmsman = async (data) => await fetch(url + 'helmsman',
+    {
+        ...putReq, body: JSON.stringify({data})
+    })
+
+const shutdown = async () => await fetch(url + 'shutdown', putReq)
+
+export { getStatus, sendControl, shutdown, sendHelmsman }
