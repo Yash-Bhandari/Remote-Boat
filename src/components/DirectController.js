@@ -9,8 +9,6 @@ const DirectController = ({ boatState, helmsman }) => {
     let [rudder, setRudder] = useState(boatState.rudder);
     let [sail, setSail] = useState(boatState.sail);
 
-    console.log(boatState)
-
     const send = () => {
         sendControl(sail, rudder);
     }
@@ -29,7 +27,8 @@ const DirectController = ({ boatState, helmsman }) => {
             setSail(boatState.sail)
     })
 
-    const disabled = (helmsman.rudder_controller.enabled && helmsman.sail_controller.enabled)
+    // Disables sending controls when both helmsman controllers are enabled
+    const disable_controls = (helmsman.rudder_controller.enabled && helmsman.sail_controller.enabled);
 
     return (
         <Card style={{ padding: '1rem' }}>
@@ -39,6 +38,7 @@ const DirectController = ({ boatState, helmsman }) => {
                 setValue={setRudder}
                 min={-45}
                 max={45}
+                disabled={helmsman.rudder_controller.enabled}
             />
             <SliderField
                 value={sail}
@@ -46,15 +46,16 @@ const DirectController = ({ boatState, helmsman }) => {
                 setValue={setSail}
                 min={0}
                 max={90}
+                disabled={helmsman.sail_controller.enabled}
             />
             <CardActions style={{ justifyContent: 'center' }}>
-                <Button style={buttonStyle} variant='contained' size='med' color='primary' onClick={reset} enabled={!disabled}>
+                <Button style={buttonStyle} variant='contained' size='med' color='primary' onClick={reset} disabled={disable_controls}>
                     Reset
                 </Button>
-                <Button style={buttonStyle} variant='contained' size='med' color='secondary' onClick={send} enabled={!disabled}>
+                <Button style={buttonStyle} variant='contained' size='med' color='secondary' onClick={send} disabled={disable_controls}>
                     Send
                 </Button>
-                <Button style={buttonStyle} variant='contained' size='med' color='primary'
+                <Button style={buttonStyle} variant='contained' size='med' color='primary' disabled={disable_controls}
                     onClick={() => {
                         setRudder(0);
                         setSail(0);

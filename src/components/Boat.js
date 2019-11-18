@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { getStatus } from '../utils/liason';
 import DirectController from './DirectController';
 import Status from './Status';
@@ -41,6 +42,7 @@ const Boat = () => {
     return (
         <>
             <Status boatState={status.boat_state} />
+            <hr/>
             <DirectController boatState={status.boat_state} helmsman={status.helmsman} />
             <HelmsmanController helmsman={status.helmsman} />
             <Shutdown />

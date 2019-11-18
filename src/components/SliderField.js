@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Slider from '@material-ui/core/Slider'
 import { Typography } from '@material-ui/core';
 
-const SliderField = ({ valueName, value, setValue, min, max }) => {
+const SliderField = ({ valueName, value, setValue, min, max, disabled }) => {
     const marks = [
         {
             value: min,
@@ -20,7 +20,7 @@ const SliderField = ({ valueName, value, setValue, min, max }) => {
     ]
     return (
         <>
-            <Typography variant='h5'>{valueName}</Typography>
+            <Typography variant='h6'>{valueName}</Typography>
             <TextField
                 id={valueName}
                 value={value}
@@ -31,7 +31,8 @@ const SliderField = ({ valueName, value, setValue, min, max }) => {
                 min={min}
                 max={max}
                 onChange={(e, val) => setValue(val)}
-                marks={marks} />
+                marks={marks}
+                disabled={disabled} />
         </>
     )
 }
