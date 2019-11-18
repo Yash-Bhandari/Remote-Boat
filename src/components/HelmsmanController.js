@@ -8,7 +8,7 @@ const HelmsmanController = ({ helmsman }) => {
 
     const update = (controller_name, value) => {
         let to_send = { ...helmsman }
-        to_send[controller_name] = value;
+        to_send[controller_name]['enabled'] = value;
         sendHelmsman({ to_send })
     }
 
@@ -22,6 +22,16 @@ const HelmsmanController = ({ helmsman }) => {
                     />
                 }
                 label="Rudder Controller"
+            />
+            <FormControlLabel
+                control={
+                    <Switch
+                        checked={helmsman.sail_controller.enabled}
+                        value="sail_controller_enabled"
+                        onChange={e=>update(e.target.checked)}
+                    />
+                }
+                label="Sail Controller"
             />
         </Card>
     )
