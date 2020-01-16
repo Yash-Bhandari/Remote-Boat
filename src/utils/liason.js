@@ -13,7 +13,8 @@ const sendControl = async (sail_angle, rudder_angle) => await fetch(url + 'contr
     {
         ...putReq, body: JSON.stringify({
             rudder_angle: rudder_angle,
-            sail_angle: sail_angle
+            sail_angle: sail_angle,
+            maximize_speed: true
         })
     })
 

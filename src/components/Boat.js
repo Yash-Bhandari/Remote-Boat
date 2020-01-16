@@ -20,6 +20,7 @@ const Boat = () => {
         helmsman: {
             desired_heading: 0,
             enabled: false,
+            maximize_speed: true,
             rudder_controller: {
                 enabled: false
             },

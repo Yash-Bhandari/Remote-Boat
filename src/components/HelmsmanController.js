@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 
 const HelmsmanController = ({ helmsman }) => {
     let [desired_heading, set_desired_heading] = useState(0);
-    let [maximize_speed, set_maximize_speed] = useState(false);
+    let [maximize_speed, set_maximize_speed] = useState(true);
 
     const update = (key, value) => {
         let to_send = {
