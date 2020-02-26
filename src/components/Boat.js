@@ -6,6 +6,22 @@ import Status from './Status';
 import HelmsmanController from './HelmsmanController';
 import Shutdown from './Shutdown';
 
+const useStyles = makeStyles({
+    root: {
+        textAlign: 'center'
+    },
+    control: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    buttons: {
+        display: 'flex',
+        justifyContent: 'center'
+    }
+})
+
 const Boat = () => {
     let [status, setStatus] = useState({
         boat_state: {
@@ -40,12 +56,12 @@ const Boat = () => {
         return () => window.clearInterval(statusUpdater);
     }, [])
 
+    const classes = useStyles();
     return (
         <>
-            <Status boatState={status.boat_state} />
-            <hr/>
-            <DirectController boatState={status.boat_state} helmsman={status.helmsman} />
-            <HelmsmanController helmsman={status.helmsman} />
+            <Status boatState={status.boat_state}/>
+            <DirectController boatState={status.boat_state} helmsman={status.helmsman} classes/>
+            <HelmsmanController helmsman={status.helmsman} classes/>
             <Shutdown />
         </>
     )

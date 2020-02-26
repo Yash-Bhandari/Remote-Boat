@@ -11,7 +11,7 @@ const Shutdown = () => {
     }
     return (
         <Card >
-            <Button variant='contained' color='secondary' size='med' onClick={onClick}>
+            <Button variant='contained' color='secondary' size='med' onClick={onClick} style={{margin: '1rem'}}>
                 Shutdown
             </Button>
         </Card>
