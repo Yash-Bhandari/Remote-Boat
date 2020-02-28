@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 
 const HelmsmanController = ({ helmsman }) => {
     let [desired_heading, set_desired_heading] = useState(0);
-    let [maximize_speed, set_maximize_speed] = useState(true);
+    let [maximize_speed, set_maximize_speed] = useState(false);
 
     const update = (key, value) => {
         let to_send = {
@@ -77,12 +77,19 @@ const HelmsmanController = ({ helmsman }) => {
                 </div>
 
                 <Typography variant='subtitle1'>{'Desired Heading: ' + helmsman.desired_heading}</Typography>
-                <div>
-                    <Typography variant='subtitle1'>{'Speed:' + (helmsman.maximize_speed ? ' Maximized ' : ' Minimized')}</Typography>
-                    <Switch
-                        checked={maximize_speed}
-                    />
-                </div>
+                <Typography variant='subtitle1'>{'Speed:' + (helmsman.maximize_speed ? ' Maximized ' : ' Minimized')}</Typography>
+
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={maximize_speed}
+                            value="maximize_speed"
+                            onChange={e => update('sail_controller', { maximize_speed: e.target.checked })}
+                        />
+                    }
+                    label="Maximize Speed"
+                    labelPlacement='start'
+                />
 
                 <SliderField
                     value={desired_heading}
