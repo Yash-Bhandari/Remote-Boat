@@ -11,6 +11,7 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import SliderField from './SliderField';
 
 const useStyles = makeStyles({
     root: {
@@ -77,23 +78,25 @@ const HelmsmanController = ({ helmsman }) => {
 
                 <Typography variant='subtitle1'>{'Desired Heading: ' + helmsman.desired_heading}</Typography>
                 <div>
-                <Typography variant='subtitle1'>{'Speed:' + (helmsman.maximize_speed ? ' Maximized ' : ' Minimized')}</Typography>
-                <Switch
-                    checked={maximize_speed}
-                />
+                    <Typography variant='subtitle1'>{'Speed:' + (helmsman.maximize_speed ? ' Maximized ' : ' Minimized')}</Typography>
+                    <Switch
+                        checked={maximize_speed}
+                    />
                 </div>
 
-                <TextField
+                <SliderField
                     value={desired_heading}
-                    onChange={e => set_desired_heading(e.target.value)}
+                    valueName="Desired Heading"
+                    setValue={set_desired_heading}
+                    min={0}
+                    max={359}
                     disabled={!helmsman.rudder_controller.enabled}
-                    type='number'
                 />
 
                 <Button
                     disabled={!helmsman.rudder_controller.enabled}
                     variant='contained' size='med' color='secondary' onClick={update}>
-                    Set Desired Heading
+                    Send
                 </Button>
 
             </ExpansionPanelDetails>
