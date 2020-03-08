@@ -8,17 +8,22 @@ const io = require('socket.io').listen(http);
 app.use(express.static(path.join(__dirname, 'build')));
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'build', 'index.html')));
 
-const boat_data = { driver: 'hello' };
 
-io.on('connection', socket => {
-    console.log('a user connected');
-    socket.on('client_join', data => {
-        socket.join('clients');
-        socket.emit('boat_data', boat_data);
-    });
-    socket.on('boat_join', data => {
-        socket.join('boat');
+io.of('/boat').on('connection', socket => {
+    console.log('joined boat');
+    socket.on('boat_data', boat_data => {
+        console.log('boat sent:' + boat_data);
+        io.of('/clients').emit('boat_data', boat_data);
     })
 });
+
+io.of('/clients').on('connection', socket => {
+    console.log('joined clients');
+    socket.on('client_data', client_data => {
+        console.log('client sent ' + client_data)
+        io.of('/boat').emit('client_data', client_data);
+    })
+
+})
 
 http.listen('5000', () => console.log('listening on *:5000'));
