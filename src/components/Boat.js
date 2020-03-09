@@ -50,7 +50,7 @@ const Boat = () => {
     useEffect(() => {
         getStatus().then(newState => setStatus(newState))
         const statusUpdater = window.setInterval(() => {
-            getStatus().then(newState => setStatus(newState))
+            //getStatus().then(newState => setStatus(newState))
         }, 1000)
 
         return () => window.clearInterval(statusUpdater);

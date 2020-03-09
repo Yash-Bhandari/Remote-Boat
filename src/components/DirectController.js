@@ -8,6 +8,10 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
+import { driverActions } from '../redux/driver';
+import { useDispatch, useSelector } from 'react-redux';
+
+const { setRudder, setSail } = driverActions;
 
 const useStyles = makeStyles({
     root: {
@@ -25,27 +29,28 @@ const useStyles = makeStyles({
     }
 })
 
-const DirectController = ({ boatState, helmsman}) => {
-    let [rudder, setRudder] = useState(boatState.rudder);
-    let [sail, setSail] = useState(boatState.sail);
+const DirectController = ({ boatState, helmsman }) => {
+    let [tempRudder, setTempRudder] = useState(boatState.rudder);
+    let [tempSail, setTempSail] = useState(boatState.sail);
+    const dispatch = useDispatch();
 
     const send = () => {
-        sendControl(sail, rudder);
+        sendControl(tempSail, tempRudder);
+        dispatch(setRudder(tempRudder));
+        dispatch(setSail(tempSail));
     }
 
     const reset = () => {
         console.log('resetting');
-        setRudder(boatState.rudder);
-        setSail(boatState.sail);
+        setTempRudder(boatState.tempRudder);
+        setTempSail(boatState.tempSail);
     }
 
-    //Automatically changes rudder and sail values if helmsman is enabled
-    useEffect(() => {
-        if (helmsman.rudder_controller.enabled)
-            setRudder(boatState.rudder);
-        if (helmsman.sail_controller.enabled)
-            setSail(boatState.sail)
-    })
+    //Automatically changes tempRudder and tempSail values if helmsman is enabled
+    if (helmsman.rudder_controller.enabled)
+        tempRudder = boatState.rudder;
+    if (helmsman.sail_controller.enabled)
+        tempSail = boatState.sail;
 
     // Disables sending controls when both helmsman controllers are enabled
     const disable_controls = (helmsman.rudder_controller.enabled && helmsman.sail_controller.enabled);
@@ -58,17 +63,17 @@ const DirectController = ({ boatState, helmsman}) => {
             </ExpansionPanelSummary>
             <ExpansionPanelDetails className={classes.control}>
                 <SliderField
-                    value={rudder}
+                    value={tempRudder}
                     valueName="Rudder Angle"
-                    setValue={setRudder}
+                    setValue={setTempRudder}
                     min={-45}
                     max={45}
                     disabled={helmsman.rudder_controller.enabled}
                 />
                 <SliderField
-                    value={sail}
+                    value={tempSail}
                     valueName="Sail Angle"
-                    setValue={setSail}
+                    setValue={setTempSail}
                     min={0}
                     max={90}
                     disabled={helmsman.sail_controller.enabled}
@@ -82,8 +87,8 @@ const DirectController = ({ boatState, helmsman}) => {
                 </Button>
                     <Button style={buttonStyle} variant='contained' size='med' color='primary' disabled={disable_controls}
                         onClick={() => {
-                            setRudder(0);
-                            setSail(0);
+                            setTempRudder(0);
+                            setTempSail(0);
                             send()
                         }}>
                         Neutral
