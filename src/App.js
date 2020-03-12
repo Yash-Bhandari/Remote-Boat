@@ -1,19 +1,14 @@
-import React from 'react';
-import Container from '@material-ui/core/Container';
-import Boat from './components/Boat';
-import './App.css';
 import { Typography } from '@material-ui/core';
-import { Provider } from 'react-redux';
+import Container from '@material-ui/core/Container';
 import { configureStore } from '@reduxjs/toolkit';
-import { rootReducer } from './redux';
+import React from 'react';
+import { Provider } from 'react-redux';
+
+import Boat from './components/Boat';
+import { store } from './redux';
 import { socketMiddleware } from './redux'
 
-const socketURL = 'http://localhost:5001/clients';
-
-const store = configureStore({
-  reducer: rootReducer,
-  middleware: [socketMiddleware(socketURL)]
-})
+import './App.css';
 
 function App() {
   return (

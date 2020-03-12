@@ -1,6 +1,7 @@
 import io from 'socket.io-client';
-import { driverActions } from './driver';
 
+import { driverActions } from './driver';
+import { helmsmanActions } from './helmsman';
 
 export const socketMiddleware = (url) => {
     const socket = io(url);
@@ -10,7 +11,9 @@ export const socketMiddleware = (url) => {
         socket.on('boat_data', boat_data => {
             console.log('Recieved ', boat_data);
             if (boat_data['driver'])
-                dispatch(driverActions.update(boat_data['driver']))
+                dispatch(driverActions.update(boat_data['driver']));
+            if (boat_data['helmsman'])
+                dispatch(helmsmanActions.update(boat_data['helmsman']));
         })
 
         return next => action => {

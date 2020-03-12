@@ -1,5 +1,7 @@
 import { createAction, createSlice } from '@reduxjs/toolkit'
 
+import { createEmitAction } from './emitAction'
+
 const driverSlice = createSlice({
     name: 'driver',
     initialState: {
@@ -32,7 +34,8 @@ const setSail = createAction('driver/sail', newAngle => ({
 }))
 
 const driverReducer = driverSlice.reducer;
-const driverActions = {...driverSlice.actions, setRudder, setSail};
+const driverActions = {...driverSlice.actions, 
+    setRudder: createEmitAction('driver/rudder'), setSail};
 
 export {
     driverReducer,

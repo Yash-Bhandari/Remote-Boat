@@ -1,16 +1,18 @@
-import Card from '@material-ui/core/Card';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import React, { useState } from 'react';
-import CardContent from '@material-ui/core/CardContent';
-import { Typography, TextField } from '@material-ui/core';
-import { sendHelmsman } from '../utils/liason';
+import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
+import Checkbox from '@material-ui/core/Checkbox'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { makeStyles } from '@material-ui/core/styles';
+import Switch from '@material-ui/core/Switch';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { helmsmanActions as ha } from '../redux/helmsman';
+import { sendHelmsman } from '../utils/liason';
 import SliderField from './SliderField';
 
 const useStyles = makeStyles({
@@ -29,7 +31,9 @@ const useStyles = makeStyles({
     }
 })
 
-const HelmsmanController = ({ helmsman }) => {
+const HelmsmanController = () => {
+    const helmsman = useSelector(state => state.helmsman);
+    const dispatch = useDispatch();
     let [desired_heading, set_desired_heading] = useState(0);
     let [maximize_speed, set_maximize_speed] = useState(false);
 
@@ -53,26 +57,34 @@ const HelmsmanController = ({ helmsman }) => {
             </ExpansionPanelSummary>
             <ExpansionPanelDetails className={classes.control}>
                 <div>
+
                     <FormControlLabel
                         control={
-                            <Switch
-                                checked={helmsman.rudder_controller.enabled}
-                                value="rudder_controller_enabled"
-                                onChange={e => update('rudder_controller', { enabled: e.target.checked })}
-                            />
-                        }
-                        label="Rudder Controller"
+                            <Checkbox
+                                checked={helmsman.rudder_controller_enabled}
+                                onChange={e => dispatch(ha.setRudderControllerEnabled(e.target.checked))}
+                                value="checkedA"
+                                inputProps={{
+                                    'aria-label': 'primary checkbox',
+                                }}
+                            />}
+                        label="Rudder Controller Enabled"
+                        labelPlacement="top"
                     />
 
                     <FormControlLabel
                         control={
-                            <Switch
-                                checked={helmsman.sail_controller.enabled}
-                                value="sail_controller_enabled"
-                                onChange={e => update('sail_controller', { enabled: e.target.checked })}
+                            <Checkbox
+                                checked={helmsman.sail_controller_enabled}
+                                onChange={e => dispatch(ha.setSailControllerEnabled(e.target.checked))}
+                                value="checkedA"
+                                inputProps={{
+                                    'aria-label': 'primary checkbox',
+                                }}
                             />
                         }
-                        label="Sail Controller"
+                        label="Sail Controller Enabled"
+                        labelPlacement="top"
                     />
                 </div>
 
@@ -97,11 +109,11 @@ const HelmsmanController = ({ helmsman }) => {
                     setValue={set_desired_heading}
                     min={0}
                     max={359}
-                    disabled={!helmsman.rudder_controller.enabled}
+                    disabled={!helmsman.rudder_controller_enabled}
                 />
 
                 <Button
-                    disabled={!helmsman.rudder_controller.enabled}
+                    disabled={!helmsman.rudder_controller_enabled}
                     variant='contained' size='med' color='secondary' onClick={update}>
                     Send
                 </Button>
